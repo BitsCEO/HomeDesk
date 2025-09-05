@@ -1,18 +1,27 @@
-package com.HomeDeskV5;
+package com.HomeDeskV5.controllers;
 
+import com.HomeDeskV5.User;
 import com.HomeDeskV5.taskDirectory.Folder;
 
 /**
  * Controller for HomeDesk client
  */
-public class HDService {
+public class HDClient {
 	private User owner;
 	private Folder directory;
 	
-	public HDService(User user) {
+	public HDClient(User user) {
 		this.owner = user;
 		
 		this.directory = new Folder();
+		this.initialize(); 
+	}
+	
+	/**
+	 * On application start, access server and load relevant data
+	 */
+	public void initialize() {
+		// TODO implement HDService.initialize()
 	}
 
 	public User getOwner() {

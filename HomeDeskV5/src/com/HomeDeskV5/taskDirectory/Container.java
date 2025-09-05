@@ -18,7 +18,9 @@ public abstract class Container extends Entity implements Iterable<Entity> {
 		this.getPath().extend(this);
 	}
 	
-	public abstract boolean isEmpty();
+	public boolean isEmpty() {
+		return (this.getContainers().size() == 0 && this.getItems().size() == 0);
+	}
 	
 	public ArrayList<Entity> getContents() {
 		ArrayList<Entity> contents = new ArrayList<>();

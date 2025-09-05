@@ -1,9 +1,5 @@
 package com.HomeDeskV5.taskDirectory;
 
-import java.util.ArrayList;
-
-import com.HomeDeskV5.Entity;
-
 public class Folder extends Container {
 	private static String SUFFIX = "FLDR";
 	
@@ -24,20 +20,8 @@ public class Folder extends Container {
 	}
 
 	@Override
-	public boolean isEmpty() {
-		// TODO implement Folder.isEmpty()
-		return false;
-	}
-
-	@Override
-	public ArrayList<Entity> getContents() {
-		// TODO implement Folder.getContents()
-		return null;
-	}
-
-	@Override
 	public String toString(boolean bannerOnly) {
-		
+		// ToDo implement Folder.toString()
 		
 		
 		return null;

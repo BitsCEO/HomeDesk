@@ -22,11 +22,6 @@ public class HDList extends Container {
 	}
 
 	@Override
-	public boolean isEmpty() {
-		return (this.getContainers().size() == 0 && this.getItems().size() == 0);
-	}
-
-	@Override
 	public String toString(boolean bannerOnly) {
 		StringBuilder sb = new StringBuilder();
 		

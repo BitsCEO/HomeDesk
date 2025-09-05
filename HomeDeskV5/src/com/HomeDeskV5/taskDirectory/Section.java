@@ -30,4 +30,16 @@ public class Section {
 		return false;
 	}
 
+	public String getTitle() {
+		return title;
+	}
+
+	public ArrayList<Entity> getContents() {
+		return contents;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 }
