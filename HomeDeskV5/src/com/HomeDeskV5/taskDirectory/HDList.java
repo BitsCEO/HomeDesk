@@ -1,24 +1,23 @@
 package com.HomeDeskV5.taskDirectory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-import com.HomeDeskV5.Entity;
 import com.HomeDeskV5.ToDoItem;
 
 public class HDList extends Container {
 	private static final String SUFFIX = "LIST";
 	
 	private ArrayList<Section> sections;            // What sections and in what order does this HDList have
-	private Map<Entity, Section> sectionMap;        // Each item is in which section
+	
+	private HDList() {
+		super(SUFFIX, null);
+	}
 	
 	public HDList(String title, HDPath path) {
 		super(SUFFIX, path);
 		this.setTitle(title);
 		this.getPath().extend(this);
 		this.sections = new ArrayList<>();
-		this.sectionMap = new HashMap<>();
 		sections.add(new Section("Unsectioned"));
 	}
 

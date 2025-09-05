@@ -59,9 +59,8 @@ public abstract class Container extends Entity implements Iterable<Entity> {
 	}
 	
 	private class ContainerIterator implements Iterator<Entity> {
+		private ArrayList<Entity> contents = getContents();
 		private int currIndex = 0;
-
-		ArrayList<Entity> contents = getContents();
 		
 		@Override
 		public boolean hasNext() {
