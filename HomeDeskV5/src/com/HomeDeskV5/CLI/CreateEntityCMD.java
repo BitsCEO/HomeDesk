@@ -1,20 +1,26 @@
 package com.HomeDeskV5.CLI;
 
+import java.util.concurrent.Callable;
+
+import com.HomeDeskV5.controllers.HDClient;
+
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
-
-import java.util.concurrent.Callable;
-import com.HomeDeskV5.taskDirectory.HDPath;
 
 /**
  * A create entity command will create whatever entity is requested and pass the constructor
  * 	whatever command line arguments it finds
  */
 @Command(name = "create", description = "Create new entity")
-public class CreateEntityCMD implements Callable<Integer> {
+public class CreateEntityCMD implements Callable<Void> {
 	
-	@Parameters(index = "0", arity = "1")
-	HDPath target;
+	@Parameters(index = "0", arity = "1", paramLabel = "<target>")
+	private String targetPathStr;
+	
+	@Command(name = "hdclient", description = "create new client")
+	void hdclient(String[] args) {
+		
+	}
 	
 	@Command(name = "folder", description = "Create new folder")
 	void folder(String[] args) {
@@ -24,11 +30,6 @@ public class CreateEntityCMD implements Callable<Integer> {
 	@Command(name = "list", description = "Create new list")
 	void list(String[] args) {
 		// TODO Implement CreateEntityCMD -> list
-	}
-	
-	@Command(name = "page", description = "Create new page")
-	void page(String[] args) {
-		// TODO Implement CreateEntityCMD -> page
 	}
 	
 	@Command(name = "section", description = "Create new section")
@@ -42,8 +43,8 @@ public class CreateEntityCMD implements Callable<Integer> {
 	}
 
 	@Override
-	public Integer call() throws Exception {
-		// TODO implement CreateEntityCMD.call()
+	public Void call() throws Exception {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
