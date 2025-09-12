@@ -1,21 +1,22 @@
 package com.HomeDeskV5.taskDirectory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import com.HomeDeskV5.Entity;
 import com.HomeDeskV5.ToDoItem;
 
 public abstract class Container extends Entity implements Iterable<Entity> {
-	private ArrayList<Container> containers;
-	private ArrayList<ToDoItem> items;
+	private Map<String, Container> containers;
+	private Map<String, ToDoItem> items;
 	
-	public Container(String typeSuffix, HDPath path) {
-		super(typeSuffix, path);
+	public Container(String typeSuffix, String title, HDPath path) {
+		super(typeSuffix, title, path);
 		
-		this.containers = new ArrayList<>();
-		this.items = new ArrayList<>();
-		this.getPath().extend(this);
+		this.containers = new HashMap<>();
+		this.items = new HashMap<>();
 	}
 	
 	public boolean isEmpty() {
@@ -25,22 +26,22 @@ public abstract class Container extends Entity implements Iterable<Entity> {
 	public ArrayList<Entity> getContents() {
 		ArrayList<Entity> contents = new ArrayList<>();
 		
-		for (Container c:containers) {
-			contents.add(c);
+		for (String k:containers.keySet()) {
+			contents.add(containers.get(k));
 		}
 		
-		for (ToDoItem tdi:items) {
-			contents.add(tdi);
+		for (String k:items.keySet()) {
+			contents.add(items.get(k));
 		}
 		
 		return contents;
 	}
 
-	public ArrayList<Container> getContainers() {
+	public Map<String, Container> getContainers() {
 		return containers;
 	}
 
-	public ArrayList<ToDoItem> getItems() {
+	public Map<String, ToDoItem> getItems() {
 		return items;
 	}
 	

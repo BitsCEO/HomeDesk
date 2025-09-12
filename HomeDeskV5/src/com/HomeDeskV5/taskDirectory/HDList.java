@@ -2,21 +2,17 @@ package com.HomeDeskV5.taskDirectory;
 
 import java.util.ArrayList;
 
-import com.HomeDeskV5.ToDoItem;
-
 public class HDList extends Container {
-	private static final String SUFFIX = "LIST";
+	private static final String SUFFIX = "list";
 	
 	private ArrayList<Section> sections;            // What sections and in what order does this HDList have
 	
 	private HDList() {
-		super(SUFFIX, null);
+		super(SUFFIX, "null", null);
 	}
 	
 	public HDList(String title, HDPath path) {
-		super(SUFFIX, path);
-		this.setTitle(title);
-		this.getPath().extend(this);
+		super(SUFFIX, title, path);
 		this.sections = new ArrayList<>();
 		sections.add(new Section("Unsectioned"));
 	}
@@ -40,17 +36,11 @@ public class HDList extends Container {
 		}
 		
 		// List containers
-		for (Container c:this.getContainers()) {
-			sb.append("\t" + c.getTitle() + " (" + c.getClass().toString() + ")");
-			if (!c.isEmpty()) {
-				sb.append(" [" + c.getNumElements() + "]\n");
-			}
-		}
+		// TODO List containers in HDList.toString()
 		
 		// List items
-		for (ToDoItem tdi:this.getItems()) {
-			sb.append("\t" + tdi.getTitle() + " (" + tdi.getClass().toString() + ")\n");
-		}
+		// TODO List items in HDList.toString()
+		
 		
 		return sb.toString();
 	}

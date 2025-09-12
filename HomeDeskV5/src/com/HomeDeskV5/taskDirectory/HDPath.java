@@ -25,6 +25,14 @@ public class HDPath implements Comparable<HDPath>, Iterable<Entity>, Watchable {
 		this.nodes = nodes;
 	}
 	
+	public Container getRoot() {
+		if (nodes.size() > 0) {
+			return (Container) nodes.get(0);
+		} else {
+			return null;
+		}
+	}
+	
 	public Container getParent() {
 		if (nodes.size() > 1) {
 			return (Container) nodes.get((nodes.size() - 2));
@@ -66,12 +74,18 @@ public class HDPath implements Comparable<HDPath>, Iterable<Entity>, Watchable {
 
 	@Override
 	public int compareTo(HDPath otherPath) {
+		
+		// Get nodes
 		ArrayList<Entity> theseNodes = this.getNodes();
 		ArrayList<Entity> thoseNodes = otherPath.getNodes();
+		
+		// Determine length of shorter path
 		int lenOfShortPath = Math.min(theseNodes.size(), thoseNodes.size());
 		
-		int comp = 0;
+		int comp = 0;     // Comparison field
 		int index = 0;
+		
+		// Get title of root node of each path
 		String thisTitle = theseNodes.get(index).getTitle();
 		String thatTitle = thoseNodes.get(index).getTitle();
 		
@@ -191,7 +205,7 @@ public class HDPath implements Comparable<HDPath>, Iterable<Entity>, Watchable {
 		return Integer.parseInt(numSB.toString());
 		
 	}
-
+	
 	@Override
 	public WatchKey register(WatchService watcher, Kind<?>[] events, Modifier... modifiers) throws IOException {
 		// TODO implement HDPath.register(WatchService, Kind<?>..., Modifier...)

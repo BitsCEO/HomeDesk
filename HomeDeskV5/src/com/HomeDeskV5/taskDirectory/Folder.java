@@ -8,15 +8,26 @@ public class Folder extends Container {
 	 *  HomeDeskService constructor
 	 */
 	public Folder() {
-		super(SUFFIX, new HDPath());
-		this.setTitle("root");
-		this.getPath().extend(this);
+		super(SUFFIX, "rootFolder", new HDPath());
+	}
+	
+	/**
+	 * Create a named root folder
+	 * 
+	 * @param title
+	 */
+	public Folder(String title) {
+		super(SUFFIX, title, new HDPath());
 	}
 
+	/**
+	 * Create a folder at a specific path
+	 * 
+	 * @param title
+	 * @param path
+	 */
 	public Folder(String title, HDPath path) {
-		super(SUFFIX, path);
-		this.setTitle(title);
-		this.getPath().extend(this);
+		super(SUFFIX, title, path);
 	}
 
 	@Override

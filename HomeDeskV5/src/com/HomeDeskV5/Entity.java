@@ -13,9 +13,13 @@ public abstract class Entity {
 	private String title;
 	private HDPath path;
 	
-	public Entity(String typeSuffix, HDPath path) {
-		this.id = String.format("%d-%s", nextEntityId++, typeSuffix);
+	public Entity(String typeSuffix, String title, HDPath path) {
+		this.id = String.format("%d.%s", nextEntityId++, typeSuffix);
+		
+		this.title = title;
+		
 		this.path = path;
+		this.path.extend(this);
 	}
 	
 	public abstract String toString(boolean bannerOnly);
@@ -38,10 +42,6 @@ public abstract class Entity {
 
 	public void setPath(HDPath path) {
 		this.path = path;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 	
 	

@@ -2,7 +2,7 @@ package com.HomeDeskV5.CLI;
 
 import java.util.concurrent.Callable;
 
-import com.HomeDeskV5.controllers.HDClient;
+import com.HomeDeskV5.taskDirectory.Folder;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
@@ -14,37 +14,25 @@ import picocli.CommandLine.Parameters;
 @Command(name = "create", description = "Create new entity")
 public class CreateEntityCMD implements Callable<Void> {
 	
-	@Parameters(index = "0", arity = "1", paramLabel = "<target>")
-	private String targetPathStr;
+	@Parameters(index = "0", defaultValue = "null", paramLabel = "<title>")
+	private String title;
 	
-	@Command(name = "hdclient", description = "create new client")
-	void hdclient(String[] args) {
+	@Command(name = "folder")
+	public Folder folder() {
+		Folder newFolder; 
 		
-	}
-	
-	@Command(name = "folder", description = "Create new folder")
-	void folder(String[] args) {
-		// TODO Implement CreateEntityCMD -> folder
-	}
-	
-	@Command(name = "list", description = "Create new list")
-	void list(String[] args) {
-		// TODO Implement CreateEntityCMD -> list
-	}
-	
-	@Command(name = "section", description = "Create new section")
-	void section(String[] args) {
-		// TODO Implement CreateEntityCMD -> section
-	}
-	
-	@Command(name = "task", description = "Create new section")
-	void task(String[] args) {
-		// TODO Implement CreateEntityCMD -> section
+		if (title == "null") {
+			newFolder = new Folder();
+		} else {
+			newFolder = new Folder(title);
+		}
+		
+		return new Folder();
 	}
 
 	@Override
 	public Void call() throws Exception {
-		// TODO Auto-generated method stub
+		System.out.println("Invalid command: command requires entity type. No action taken");
 		return null;
 	}
 

@@ -21,8 +21,7 @@ public abstract class ToDoItem extends Entity{
 	private LocalDateTime schedEnd;
 	
 	public ToDoItem(String title, HDPath path, String typeSuffix) {
-		super(typeSuffix, path);
-		this.setTitle(title);
+		super(typeSuffix, title, path);
 	}
 
 	public String getDesc() {
