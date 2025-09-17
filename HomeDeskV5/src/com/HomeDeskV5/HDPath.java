@@ -1,4 +1,4 @@
-package com.HomeDeskV5.taskDirectory;
+package com.HomeDeskV5;
 
 import java.io.IOException;
 import java.nio.file.WatchEvent.Kind;
@@ -8,8 +8,6 @@ import java.nio.file.WatchService;
 import java.nio.file.Watchable;
 import java.util.ArrayList;
 import java.util.Iterator;
-
-import com.HomeDeskV5.Entity;
 
 /**
  * Path describing a location within a HomeDesk directory
@@ -21,8 +19,9 @@ public class HDPath implements Comparable<HDPath>, Iterable<Entity>, Watchable {
 		this.nodes = new ArrayList<>();
 	}
 	
-	public HDPath(ArrayList<Entity> nodes) {
-		this.nodes = nodes;
+	public HDPath(HDPath parent, Entity leaf) {
+		this.nodes = parent.getNodes();
+		this.extend(leaf);
 	}
 	
 	public Container getRoot() {
@@ -68,7 +67,7 @@ public class HDPath implements Comparable<HDPath>, Iterable<Entity>, Watchable {
 		return;
 	}
 	
-	public void extend(Entity newNode) {
+	private void extend(Entity newNode) {
 		this.nodes.add(newNode);
 	}
 

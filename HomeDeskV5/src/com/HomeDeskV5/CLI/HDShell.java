@@ -10,8 +10,8 @@ import org.jline.reader.UserInterruptException;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 
+import com.HomeDeskV5.HDPath;
 import com.HomeDeskV5.taskDirectory.Folder;
-import com.HomeDeskV5.taskDirectory.HDPath;
 
 import picocli.CommandLine;
 import picocli.CommandLine.InitializationException;
@@ -39,34 +39,6 @@ public class HDShell {
 			System.out.println("HDShell initialization failed!");
 		}
 		
-		
-	}
-	
-	private void startInputLoop() {
-		
-		while(true) {
-			String input = null;
-			
-			try {
-				input = reader.readLine(prompt());
-				ParsedLine parsedLine = reader.getParser().parse(input, 0);
-				String[] args = parsedLine.words().toArray(new String[0]);
-				
-				if (args.length == 0) {
-					continue;
-				}
-				
-				commandLine.execute(args);
-				
-			} catch (UserInterruptException uie) {
-				// TODO Handle UserInterruptException in interactive loop
-			} catch (EndOfFileException eofe) {
-				return;
-			} catch (Exception e) {
-				commandLine.getErr().println(e.getMessage());
-			}
-			
-		}
 		
 	}
 	
@@ -100,6 +72,34 @@ public class HDShell {
 		}
 		
 		return true;
+	}
+	
+	private void startInputLoop() {
+		
+		while(true) {
+			String input = null;
+			
+			try {
+				input = reader.readLine(prompt());
+				ParsedLine parsedLine = reader.getParser().parse(input, 0);
+				String[] args = parsedLine.words().toArray(new String[0]);
+				
+				if (args.length == 0) {
+					continue;
+				}
+				
+				commandLine.execute(args);
+				
+			} catch (UserInterruptException uie) {
+				// TODO Handle UserInterruptException in interactive loop
+			} catch (EndOfFileException eofe) {
+				return;
+			} catch (Exception e) {
+				commandLine.getErr().println(e.getMessage());
+			}
+			
+		}
+		
 	}
 	
 	private String prompt() {

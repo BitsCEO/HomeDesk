@@ -27,7 +27,7 @@ class HDCommands implements Runnable {
 		if (spec.commandLine().getSubcommands().isEmpty() || helpRequested) {
 			spec.commandLine().usage(System.out);
 		} else {
-			System.out.println()
+			System.out.println();
 		}
 		
 		

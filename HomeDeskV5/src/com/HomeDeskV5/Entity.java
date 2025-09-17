@@ -1,34 +1,27 @@
 package com.HomeDeskV5;
 
-import com.HomeDeskV5.taskDirectory.HDPath;
-
-/**
- * All HomeDesk objects will be entities with unique identifiers to build a system of links 
- * 	and navigation to make moving through the application absolutely fluidly. 
- */
 public abstract class Entity {
 	private static int nextEntityId;
 	
-	private final String id;
+	private final int id;
 	private String title;
 	private HDPath path;
 	
-	public Entity(String typeSuffix, String title, HDPath path) {
-		this.id = String.format("%d.%s", nextEntityId++, typeSuffix);
-		
+	public Entity(String title, HDPath parent) {
+		this.id = nextEntityId++;
 		this.title = title;
-		
-		this.path = path;
-		this.path.extend(this);
+		this.path = new HDPath(parent, this);
 	}
 	
-	public abstract String toString(boolean bannerOnly);
+	public abstract void delete();
 	
-	public void print(boolean bannerOnly) {
-		System.out.println(this.toString(bannerOnly));
+	public abstract String getSuffix();
+
+	public static int getNextEntityId() {
+		return nextEntityId;
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
@@ -40,9 +33,12 @@ public abstract class Entity {
 		return path;
 	}
 
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	public void setPath(HDPath path) {
 		this.path = path;
 	}
-	
-	
+
 }
