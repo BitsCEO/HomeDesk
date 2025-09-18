@@ -8,6 +8,9 @@ import java.nio.file.WatchService;
 import java.nio.file.Watchable;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.NoSuchElementException;
+import java.util.Queue;
 
 /**
  * Path describing a location within a HomeDesk directory
@@ -15,8 +18,21 @@ import java.util.Iterator;
 public class HDPath implements Comparable<HDPath>, Iterable<Entity>, Watchable {
 	private ArrayList<Entity> nodes;
 	
+	/**
+	 * Dummy HDPath
+	 */
 	public HDPath() {
 		this.nodes = new ArrayList<>();
+	}
+	
+	/**
+	 * Copy an HDPath object. This is used to create cursors
+	 */
+	public HDPath(HDPath path) {
+		nodes = new ArrayList<>();
+		for (Entity e:path.getNodes()) {
+			nodes.add(e);
+		}
 	}
 	
 	public HDPath(HDPath parent, Entity leaf) {
@@ -40,6 +56,73 @@ public class HDPath implements Comparable<HDPath>, Iterable<Entity>, Watchable {
 			return null;
 	}
 	
+	public Iterator<Entity> walker() {
+		return new Walker();
+	}
+	
+	/**
+	 * Class that describes a Walker object to touch every item in a directory and
+	 *  all subdirectories
+	 *
+	 */
+	private class Walker implements Iterator<Entity> {
+		private Queue<Container> ctnrQueue;
+		private Entity startingPlace = nodes.getLast();
+		
+		private ArrayList<Entity> theWalk;
+		private int currIndex;
+		
+		public Walker () {
+			this.ctnrQueue = new LinkedList<>();
+			
+			this.theWalk = new ArrayList<>();
+			this.currIndex = 0;
+			
+			if (startingPlace.getClass() != Container.class) {
+				// Walker is called on an item rather then a container, and so stops
+				
+				theWalk.add(startingPlace);
+				
+			} 
+			else {
+				
+				ctnrQueue.add((Container) startingPlace);
+				
+				// Iterate all containers that need walking. Add items to the walk, and containers to 
+				//  ctnrsToWalk
+				for (Container ctnr:ctnrQueue) {
+					
+					// Iterate all entities in the container
+					for (Entity ent:ctnr) {
+
+						if (ent.getClass() == Container.class) {
+							// Container is found. Add to queue
+							
+							ctnrQueue.add((Container) ent);
+							
+						} else {
+							// ToDoItem is found. Add to walk
+							
+							theWalk.add(ent);
+							
+						}	
+					}	
+				}	
+			}
+		}
+		
+		@Override
+		public boolean hasNext() {
+			return currIndex < theWalk.size();
+		}
+
+		@Override
+		public Entity next() {
+			return theWalk.get(currIndex++);
+		}
+		
+	}
+	
 	public String toString() {
 		if (nodes.size() == 0) {
 			return "";
@@ -49,7 +132,7 @@ public class HDPath implements Comparable<HDPath>, Iterable<Entity>, Watchable {
 		sb.append(nodes.get(0).getTitle());
 		
 		for (int i = 1; i < nodes.size();) {
-			sb.append("/" + nodes.get(i).getTitle());
+			sb.append(">" + nodes.get(i).getTitle());
 		}
 		
 		return sb.toString();
@@ -71,6 +154,12 @@ public class HDPath implements Comparable<HDPath>, Iterable<Entity>, Watchable {
 		this.nodes.add(newNode);
 	}
 
+	/**
+	 * This compareTo method compares two HDPath objects and finds the highest level difference and then compares that high level 
+	 *  difference alphabetically. Like other compareTo() methods, if this path "comes before" the other path, return -1. 
+	 *  If it "comes after", return 1. If the HDPath objects trace the same path, return 0. Both paths refer to the same object. If 
+	 *  one path is shorter than the other path, but they match through the end of the shorter path, the shorter path comes before the longer. 
+	 */
 	@Override
 	public int compareTo(HDPath otherPath) {
 		
@@ -110,6 +199,10 @@ public class HDPath implements Comparable<HDPath>, Iterable<Entity>, Watchable {
 		else {
 			return comp;
 		}
+	}
+	
+	public Entity contains() {
+		return nodes.getLast();
 	}
 
 	public ArrayList<Entity> getNodes() {
@@ -219,8 +312,27 @@ public class HDPath implements Comparable<HDPath>, Iterable<Entity>, Watchable {
 
 	@Override
 	public Iterator<Entity> iterator() {
-		// TODO implement HDPath.iterator()
-		return null;
+		return new PathIterator();
+	}
+	
+	private class PathIterator implements Iterator<Entity> {
+		private int currDepth = 0;
+
+		@Override
+		public boolean hasNext() {
+			return (currDepth < nodes.size());
+		}
+
+		@Override
+		public Entity next() {
+			
+			if (!hasNext()) {
+				throw new NoSuchElementException();
+			}
+			
+			return nodes.get(currDepth++);
+		}
+		
 	}
 	
 }

@@ -2,11 +2,16 @@ package com.HomeDeskV5;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
-public abstract class Container extends Entity implements Iterable<ToDoItem> {
+public abstract class Container extends Entity implements Iterable<Entity> {
 	
-	private Map<String, ToDoItem> toDoItems;
+	private HashMap<String, ToDoItem> toDoItems;
+	
+	public Container() {
+		super("root", new HDPath());
+		
+		this.toDoItems = new HashMap<>();
+	}
 	
 	public Container(String title, HDPath parent) {
 		super(title, parent);
@@ -14,22 +19,32 @@ public abstract class Container extends Entity implements Iterable<ToDoItem> {
 		this.toDoItems = new HashMap<>();
 	}
 	
+	public boolean acceptItem(ToDoItem itemToAdd) {
+		String key = itemToAdd.getTitle();
+		
+		// If that key already exists, handle collision
+		if (toDoItems.containsKey(key)) {
+			System.out.println("Object with that name already exists here! No action taken");
+			return false;
+		} else {
+			itemToAdd.makePathHere(this);
+			toDoItems.put(key, itemToAdd);
+			return true;
+		}
+	}
+	
 	public abstract boolean isEmpty();
 	
 	public abstract int getNumItems();
 	
-	public abstract ArrayList<Entity> getContents();
+	public abstract ArrayList<Entity> getContentsList();
 
 	@Override
-	public void delete() {
-		// TODO Auto-generated method stub
+	public abstract String getSuffix();
 
-	}
-
-	@Override
-	public String getSuffix() {
-		// TODO Auto-generated method stub
-		return null;
+	public HashMap<String, ToDoItem> getToDoItems() {
+		return toDoItems;
 	}
 
 }
+ 

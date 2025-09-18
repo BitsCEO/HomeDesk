@@ -2,10 +2,11 @@ package com.HomeDeskV5.CLI;
 
 import java.util.concurrent.Callable;
 
-import com.HomeDeskV5.taskDirectory.Folder;
+import com.HomeDeskV5.Folder;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
+import picocli.CommandLine.ParentCommand;
 
 /**
  * A create entity command will create whatever entity is requested and pass the constructor
@@ -17,6 +18,9 @@ public class CreateEntityCMD implements Callable<Void> {
 	@Parameters(index = "0", defaultValue = "null", paramLabel = "<title>")
 	private String title;
 	
+	@ParentCommand
+	HDShellEnv parentCommand;
+	
 	@Command(name = "folder")
 	public Folder folder() {
 		Folder newFolder; 
@@ -24,10 +28,10 @@ public class CreateEntityCMD implements Callable<Void> {
 		if (title == "null") {
 			newFolder = new Folder();
 		} else {
-			newFolder = new Folder(title);
+			newFolder = new Folder(title, parentCommand.cursor());
 		}
 		
-		return new Folder();
+		return newFolder; 
 	}
 
 	@Override

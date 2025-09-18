@@ -10,18 +10,18 @@ import org.jline.reader.UserInterruptException;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 
+import com.HomeDeskV5.Entity;
 import com.HomeDeskV5.HDPath;
-import com.HomeDeskV5.taskDirectory.Folder;
 
 import picocli.CommandLine;
 import picocli.CommandLine.InitializationException;
 import picocli.shell.jline3.PicocliCommands;
 
+/**
+ * HDShell launcher with static main method. Creates terminal, an environment for the shell
+ * 	and interfaces the two with PicocliCommands
+ */
 public class HDShell {
-	
-	// ENV fields
-	private Folder directory;
-	private HDPath cursor;
 	
 	// CLI fields
 	private CommandLine commandLine;
@@ -29,15 +29,22 @@ public class HDShell {
 	private PicocliCommands picocliCommands;
 	private LineReader reader;
 	
+	// Shell environment
+	private HDShellEnv env;
+	
 	public HDShell() {
-		this.directory = new Folder();
-		this.cursor = this.directory.getPath();
 		
 		if (initializeShell()) {
 			startInputLoop();
 		} else {
 			System.out.println("HDShell initialization failed!");
 		}
+		
+	}
+	
+	public static void main(String[] args) throws IOException {
+		
+		HDShell shell = new HDShell();
 		
 		
 	}
@@ -50,7 +57,8 @@ public class HDShell {
 			
 			// Initialize Command Line Interface, which are the commands that connect typing input
 			//  to programatic behavior. Link this to the top-level command
-			commandLine = new CommandLine(new HDCommands());
+			env = new HDShellEnv();
+			commandLine = new CommandLine(env);
 			
 			// Prepare the command line, loaded with the cli, to be plugged into JLine terminal
 			picocliCommands = new PicocliCommands(commandLine);
@@ -103,7 +111,29 @@ public class HDShell {
 	}
 	
 	private String prompt() {
-		return String.format("{HD}%s>", cursor.toString());
+		return String.format("{HD}%s>", env.cursor().toString());
+	}
+	
+	private class entConverter implements CommandLine.ITypeConverter<Entity> {
+
+		@Override
+		public Entity convert(String value) throws Exception {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
+	}
+	
+	private class pathConverter implements CommandLine.ITypeConverter<HDPath> {
+
+		@Override
+		public HDPath convert(String value) throws Exception {
+			
+			// TODO pathConverter implementation
+			
+			return null;
+		}
+		
 	}
 	
 }

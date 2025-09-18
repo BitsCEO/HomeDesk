@@ -26,15 +26,41 @@ public abstract class ToDoItem extends Entity {
 	}
 
 	@Override
-	public void delete() {
-		// TODO Auto-generated method stub
-
+	public String getSuffix() {
+		// TODO ToDoItem.getSuffix()
+		return null;
 	}
 
-	@Override
-	public String getSuffix() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getDesc() {
+		return desc;
+	}
+
+	public PRIORITY getPriority() {
+		return priority;
+	}
+
+	public boolean isCompleted() {
+		return completed;
+	}
+
+	public List<ToDoItem> getPreReqs() {
+		return preReqs;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public void setPriority(PRIORITY priority) {
+		this.priority = priority;
+	}
+
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
+	}
+
+	public void setPreReqs(List<ToDoItem> preReqs) {
+		this.preReqs = preReqs;
 	}
 
 }

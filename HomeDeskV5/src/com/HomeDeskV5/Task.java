@@ -37,4 +37,32 @@ public class Task extends ToDoItem {
 		return false;
 	}
 
+	public String getSuffix() {
+		return SUFFIX;
+	}
+
+	public LocalDate getDateDue() {
+		return dateDue;
+	}
+
+	public LocalTime getTimeDue() {
+		return timeDue;
+	}
+
+	public List<Task> getSubTasks() {
+		return subTasks;
+	}
+
+	public void setDateDue(LocalDate dateDue) {
+		this.dateDue = dateDue;
+	}
+
+	public void setTimeDue(LocalTime timeDue) {
+		this.timeDue = timeDue;
+	}
+
+	public void setSubTasks(List<Task> subTasks) {
+		this.subTasks = subTasks;
+	}
+
 }

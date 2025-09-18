@@ -1,5 +1,8 @@
 package com.HomeDeskV5.CLI;
 
+import com.HomeDeskV5.Folder;
+import com.HomeDeskV5.HDPath;
+
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Option;
@@ -13,7 +16,17 @@ subcommands = {
 		NavigateCMD.class,
 		ShowEntityCMD.class
 })
-class HDCommands implements Runnable {
+class HDShellEnv implements Runnable {
+	
+	// ENV fields
+	private Folder directory;
+	private HDPath cursor;
+	
+	// Constructor for shell environment
+	public HDShellEnv() {
+		this.directory = new Folder();
+		this.cursor = directory.getPath();
+	}
 	
 	@Spec
 	CommandSpec spec;
@@ -30,7 +43,10 @@ class HDCommands implements Runnable {
 			System.out.println();
 		}
 		
-		
+	}
+	
+	public HDPath cursor() {
+		return cursor;
 	}
 	
 }
